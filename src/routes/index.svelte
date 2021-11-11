@@ -19,8 +19,6 @@
 
 
 <div class="content">
-	<h1>Todos</h1>
-
 	{#each todos as todo}
 		<div class="todo">
 			<input

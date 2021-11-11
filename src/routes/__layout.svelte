@@ -1,9 +1,10 @@
 <script lang="ts">
-	import Header from '$lib/header/Header.svelte';
 	import '../app.css';
 </script>
 
-<Header />
+<header>
+	<h1>What to do? 🤔</h1>
+</header>
 
 <main>
 	<slot />

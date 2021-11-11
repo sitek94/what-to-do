@@ -1,59 +1,64 @@
-<script context="module" lang="ts">
+<script lang='ts'>
+	// since there's no dynamic data here, we can prerender
+	// it so that it gets served as a static asset in prod
 	export const prerender = true;
+
+	let todos = [
+		{ done: false, text: 'FCC: Python' },
+		{ done: false, text: 'Internet History' },
+		{ done: false, text: 'D3 Graph' },
+		{ done: false, text: 'FCC: Alert component' },
+	];
+
+	function clear() {
+		todos = todos.filter(t => !t.done);
+	}
+
+
 </script>
 
-<script lang="ts">
-	import Counter from '$lib/Counter.svelte';
-</script>
 
-<svelte:head>
-	<title>Home</title>
-</svelte:head>
+<div class="content">
+	<h1>Todos</h1>
 
-<section>
-	<h1>
-		<div class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
+	{#each todos as todo}
+		<div class="todo">
+			<input
+				type=checkbox
+				bind:checked={todo.done}
+			>
+
+			<input
+				type=text
+				placeholder="What needs to be done?"
+				bind:value={todo.text}
+			>
 		</div>
+	{/each}
 
-		to your new<br />SvelteKit app
-	</h1>
+	<button on:click={clear}>
+		Clear completed
+	</button>
+</div>
 
-	<h2>
-		try editing <strong>src/routes/index.svelte</strong>
-	</h2>
-
-	<Counter />
-</section>
 
 <style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 1;
-	}
+    .content {
+        text-align: center;
+        width: 100%;
+        max-width: var(--column-width);
+        margin: var(--column-margin-top) auto 0 auto;
+    }
 
-	h1 {
-		width: 100%;
-	}
+    .todo {
+        margin-bottom: 0.5rem;
+    }
 
-	.welcome {
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
+    .todo input[type='text'] {
+        padding: 0.5rem;
+    }
+    .todo input[type='checkbox'] {
+        margin-right: 0.5rem;
+        transform: scale(2);
+    }
 </style>

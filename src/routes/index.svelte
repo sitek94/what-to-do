@@ -1,49 +1,28 @@
 <script lang="ts">
+  import Card from '$lib/Card.svelte';
+
   // since there's no dynamic data here, we can prerender
   // it so that it gets served as a static asset in prod
   export const prerender = true;
 
   let todos = [
-    { done: false, text: 'FCC: Python' },
-    { done: false, text: 'Internet History' },
-    { done: false, text: 'D3 Graph' },
-    { done: false, text: 'FCC: Alert component' },
+    { done: false, text: 'Python Course' },
+    { done: false, text: 'Internet History, Technology and Security' },
+    { done: false, text: 'Svelte: Todo App (this one 😄)' },
   ];
-
-  function clear() {
-    todos = todos.filter(t => !t.done);
-  }
 </script>
 
-<div class="content">
+<div class="cards">
   {#each todos as todo}
-    <div class="todo">
-      <input type="checkbox" bind:checked={todo.done} />
-
-      <input type="text" placeholder="What needs to be done?" bind:value={todo.text} />
-    </div>
+    <Card text={todo.text} disabled={todo.done} onClick={() => (todo.done = !todo.done)} />
   {/each}
-
-  <button on:click={clear}> Clear completed </button>
 </div>
 
 <style>
-  .content {
-    text-align: center;
-    width: 100%;
-    max-width: var(--column-width);
-    margin: var(--column-margin-top) auto 0 auto;
-  }
-
-  .todo {
-    margin-bottom: 0.5rem;
-  }
-
-  .todo input[type='text'] {
-    padding: 0.5rem;
-  }
-  .todo input[type='checkbox'] {
-    margin-right: 0.5rem;
-    transform: scale(2);
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
   }
 </style>

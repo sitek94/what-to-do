@@ -1,33 +1,23 @@
-# create-svelte
+# What To Do? (temporary name)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
+## Ideas
+- Sidebar with the todos that are in the queue
+  - [Drag'n'Drop](https://svelte.dev/repl/b225504c9fea44b189ed5bfb566df6e6?version=3.44.2) them to the active area
+- App name: Learning Loop
 
-## Creating a project
+## Powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte)
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm init svelte@next
-
-# create a new project in my-app
-npm init svelte@next my-app
-```
-
-> Note: the `@next` is temporary
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Development 
 
 ```bash
+npm run install
 npm run dev
 
 # or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
 
-## Building
+### Building
 
 Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment. Then:
 

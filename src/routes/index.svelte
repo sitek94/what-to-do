@@ -10,6 +10,7 @@
       { done: false, text: 'Python Course' },
       { done: false, text: 'Internet History, Technology and Security' },
       { done: false, text: 'Svelte: Todo App (this one 😄)' },
+      { done: false, text: 'Timeline Improvements' },
     ];
 
     let todos;
@@ -33,6 +34,10 @@
     todo.done = !todo.done;
     saveTodos();
   }
+  function addTodo() {
+    todos.push({ done: false, text: '' });
+    saveTodos();
+  }
 </script>
 
 <div class="flex-wrapper">
@@ -41,6 +46,7 @@
       {todo.text}
     </button>
   {/each}
+  <button class="placeholder" on:click={addTodo}>+</button>
 </div>
 
 <style>
@@ -51,6 +57,7 @@
     gap: 1rem;
   }
   button {
+    cursor: pointer;
     width: 290px;
     height: 180px;
     display: flex;
@@ -67,5 +74,10 @@
   }
   .done {
     opacity: 0.5;
+  }
+  .placeholder {
+    font-size: 3rem;
+    background: transparent;
+    border: 2px dashed var(--text-color);
   }
 </style>

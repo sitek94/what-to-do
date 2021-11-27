@@ -1,28 +1,71 @@
 <script lang="ts">
-  import Card from '$lib/Card.svelte';
-
   // since there's no dynamic data here, we can prerender
   // it so that it gets served as a static asset in prod
   export const prerender = true;
 
-  let todos = [
-    { done: false, text: 'Python Course' },
-    { done: false, text: 'Internet History, Technology and Security' },
-    { done: false, text: 'Svelte: Todo App (this one 😄)' },
-  ];
+  let todos = getTodos();
+
+  function getTodos() {
+    let initialTodos = [
+      { done: false, text: 'Python Course' },
+      { done: false, text: 'Internet History, Technology and Security' },
+      { done: false, text: 'Svelte: Todo App (this one 😄)' },
+    ];
+
+    let todos;
+    try {
+      todos = JSON.parse(localStorage.getItem('todos'));
+      if (!todos) {
+        todos = initialTodos;
+      }
+    } catch {
+      todos = initialTodos;
+    }
+    return todos;
+  }
+
+  function saveTodos() {
+    localStorage.setItem('todos', JSON.stringify(todos));
+    todos = todos;
+  }
+
+  function toggleTodo(todo) {
+    todo.done = !todo.done;
+    saveTodos();
+  }
 </script>
 
-<div class="cards">
+<div class="flex-wrapper">
   {#each todos as todo}
-    <Card text={todo.text} disabled={todo.done} onClick={() => (todo.done = !todo.done)} />
+    <button class:done={todo.done} on:click={() => toggleTodo(todo)}>
+      {todo.text}
+    </button>
   {/each}
 </div>
 
 <style>
-  .cards {
+  .flex-wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
+  }
+  button {
+    width: 290px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    color: var(--text-color);
+    background: var(--secondary-color);
+    margin: 0;
+    padding: 1rem;
+    text-align: center;
+    font-size: 2rem;
+    border: 0;
+  }
+  .done {
+    opacity: 0.5;
   }
 </style>

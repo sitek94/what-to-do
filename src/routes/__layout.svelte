@@ -2,33 +2,63 @@
   import '../app.css';
 </script>
 
-<header>
-  <h1>What to do? 🤔</h1>
-</header>
+<div class="layout">
+  <header>
+    <h1>What to do? 🤔</h1>
+  </header>
 
-<main>
-  <slot />
-</main>
+  <main>
+    <slot />
+  </main>
 
-<footer>
-  <p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-</footer>
+  <aside>
+    <h2>Todos</h2>
+
+    <ul>
+      <li>Todo 1</li>
+      <li>Todo 1</li>
+      <li>Todo 1</li>
+      <li>Todo 1</li>
+      <li>Todo 1</li>
+      <li>Todo 1</li>
+    </ul>
+  </aside>
+
+  <footer>
+    <p>
+      <a rel="noreferrer" target="_blank" href="https://github.com/sitek94/what-to-do">
+        See repository &rarr;
+      </a>
+    </p>
+  </footer>
+</div>
 
 <style>
+  .layout {
+    height: 100vh;
+    display: grid;
+    grid-template-areas:
+      'header aside'
+      'main aside'
+      'footer aside';
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr 200px;
+  }
+
+  header {
+    grid-area: header;
+  }
+
   main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    width: 100%;
-    box-sizing: border-box;
+    grid-area: main;
+  }
+
+  aside {
+    grid-area: aside;
   }
 
   footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    grid-area: footer;
     padding: 40px;
   }
 
@@ -38,7 +68,7 @@
 
   @media (min-width: 480px) {
     footer {
-      padding: 40px 0;
+      padding: 40px 20px;
     }
   }
 </style>

@@ -1,5 +1,6 @@
 <script lang="ts">
   import '../app.css';
+  import Sidebar from '$lib/Sidebar.svelte';
 </script>
 
 <div class="layout">
@@ -11,18 +12,7 @@
     <slot />
   </main>
 
-  <aside>
-    <h2>Todos</h2>
-
-    <ul>
-      <li>Todo 1</li>
-      <li>Todo 1</li>
-      <li>Todo 1</li>
-      <li>Todo 1</li>
-      <li>Todo 1</li>
-      <li>Todo 1</li>
-    </ul>
-  </aside>
+  <Sidebar />
 
   <footer>
     <p>
@@ -51,10 +41,6 @@
 
   main {
     grid-area: main;
-  }
-
-  aside {
-    grid-area: aside;
   }
 
   footer {

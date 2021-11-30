@@ -24,6 +24,10 @@
     newTodoText = '';
   }
 
+  function deleteTodo(todoId: string) {
+    todos = todos.filter(t => t.id !== todoId);
+  }
+
   $: {
     if (todos.length) {
       persistTodos(todos);
@@ -46,7 +50,16 @@
     </form>
     <ul>
       {#each inactiveTodos as todo}
-        <li>{todo.text}</li>
+        <li>
+          {todo.text}
+          <button on:click={() => deleteTodo(todo.id)}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"
+              />
+            </svg>
+          </button>
+        </li>
       {/each}
     </ul>
   </aside>
@@ -97,13 +110,37 @@
 
   li {
     display: flex;
-    line-height: 1;
     align-items: center;
+    justify-content: space-between;
+    line-height: 1;
     height: 48px;
     padding: 12px 16px;
     border-bottom: 1px solid #333;
   }
   li:hover {
     background: #1f1f1f;
+  }
+  li:hover button {
+    visibility: visible;
+  }
+  li button {
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border: 0;
+    border-radius: 50%;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+  }
+  li button svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--text-color);
+  }
+  li button:hover {
+    background: #333;
   }
 </style>

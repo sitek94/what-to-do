@@ -36,21 +36,42 @@
 
   $: inactiveTodos = todos.filter(t => !t.active);
   $: activeTodos = todos.filter(t => t.active);
+
+  function dragStart(event, todoId) {
+    event.dataTransfer.setData('text/plain', todoId);
+  }
+
+  function drop(event, hoveredArea) {
+    event.preventDefault();
+    const todoId = event.dataTransfer.getData('text/plain');
+
+    todos = todos.map(t => {
+      if (t.id === todoId) {
+        return { ...t, active: hoveredArea === 'active' };
+      }
+      return t;
+    });
+
+    hoveredArea = null;
+  }
 </script>
 
 <div class="layout">
-  <div class="flex-wrapper">
+  <div class="flex-wrapper" on:drop={e => drop(e, 'active')} ondragover="return false">
     {#each activeTodos as todo}
-      <TodoCard done={todo.done} text={todo.text} onClick={() => toggleTodo(todo.id)} />
+      <div draggable="true" on:dragstart={e => dragStart(e, todo.id)}>
+        <TodoCard done={todo.done} text={todo.text} onClick={() => toggleTodo(todo.id)} />
+      </div>
     {/each}
   </div>
-  <aside>
+
+  <aside on:drop={e => drop(e, 'inactive')} ondragover="return false">
     <form on:submit|preventDefault={() => addTodo(newTodoText)}>
       <input type="text" placeholder="New todo" bind:value={newTodoText} required />
     </form>
     <ul>
       {#each inactiveTodos as todo}
-        <li>
+        <li draggable="true" on:dragstart={e => dragStart(e, todo.id)}>
           {todo.text}
           <button on:click={() => deleteTodo(todo.id)}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -69,6 +90,7 @@
   :global(*) {
     box-sizing: border-box;
   }
+
   .layout {
     height: 100vh;
     display: flex;
@@ -77,13 +99,16 @@
 
   .flex-wrapper {
     flex: 1;
-    margin-top: 2rem;
+    height: 100%;
+    padding: 2rem;
     display: flex;
-    flex-wrap: wrap;
+    align-content: flex-start;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 1rem;
   }
   aside {
+    width: 300px;
     height: 100%;
     background: #222;
   }
@@ -117,11 +142,17 @@
     padding: 12px 16px;
     border-bottom: 1px solid #333;
   }
+
   li:hover {
     background: #1f1f1f;
   }
   li:hover button {
     visibility: visible;
+  }
+  li:active {
+    border-top: 1px solid #333;
+    border-bottom: 2px solid #333;
+    outline: none;
   }
   li button {
     visibility: hidden;

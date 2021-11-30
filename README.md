@@ -1,13 +1,14 @@
 # What To Do? (temporary name)
 
 ## Ideas
+
 - Sidebar with the todos that are in the queue
   - [Drag'n'Drop](https://svelte.dev/repl/b225504c9fea44b189ed5bfb566df6e6?version=3.44.2) them to the active area
 - App name: Learning Loop
 
 ## Powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte)
 
-### Development 
+### Development
 
 ```bash
 npm run install

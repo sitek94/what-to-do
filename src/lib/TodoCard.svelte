@@ -1,9 +1,10 @@
 <script>
   export let done;
   export let text;
+  export let onClick;
 </script>
 
-<button class="card" class:done>
+<button class:done on:click={onClick}>
   {text}
 </button>
 
